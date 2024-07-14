@@ -1,11 +1,11 @@
 public protocol Saver {
   associatedtype T
 
-  func load() -> T?
+  func load(_ key: String) -> T?
 
-  func save(newItem: T) -> Bool
+  func save(_ key: String, value: T) -> Bool
 
-  func reset()
+  func reset(_ key: String)
 
   func isNewItem(newItem: T, oldItem: T?) -> Bool
 }

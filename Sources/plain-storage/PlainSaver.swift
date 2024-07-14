@@ -5,11 +5,11 @@ open class PlainSaver<T: Codable>: Saver {
     self.storage = storage
   }
 
-  public func load() -> T? {
+  public func load(_ key: String) -> T? {
     var item: T? = nil
 
     do {
-      item = try storage.load()
+      item = try storage.load(key: key)
     }
     catch(let e) {
       print(e.localizedDescription)
@@ -18,12 +18,12 @@ open class PlainSaver<T: Codable>: Saver {
     return item
   }
 
-  public func save(newItem: T) -> Bool {
-    let oldItem = load()
+  public func save(_ key: String, value: T) -> Bool {
+    let currentItem = load(key)
 
-    if isNewItem(newItem: newItem, oldItem: oldItem) {
+    if isNewItem(newItem: value, oldItem: currentItem) {
       do {
-        try storage.save(newItem)
+        try storage.save(key, value: value)
 
         return true
       }
@@ -35,8 +35,8 @@ open class PlainSaver<T: Codable>: Saver {
     return false
   }
 
-  public func reset() {
-    storage.reset()
+  public func reset(_ key: String) {
+    storage.reset(key: key)
   }
 
   public func isNewItem(newItem: T, oldItem: T?) -> Bool {
