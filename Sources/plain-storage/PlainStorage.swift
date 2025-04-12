@@ -32,3 +32,4 @@ open class PlainStorage<T: Codable> {
     store.removeObject(forKey: key)
   }
 }
+
